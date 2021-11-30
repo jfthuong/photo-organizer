@@ -19,9 +19,6 @@ PathLike = Union[Path, str]
 pil2t = transforms.ToTensor()
 t2pil = transforms.ToPILImage()
 
-# To be able to load arial.ttf font
-sys.path.append(str(Path(__file__).parent))
-
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🖼️")
 st.image("https://unpackai.github.io/unpackai_logo.svg")
 st.title("Facial Identification")
@@ -190,7 +187,10 @@ def show_persons_in_photos(
                         f"#{i}.{person}:{score:.2f}" if show_score else f"#{i}.{person}"
                     )
 
-                    font = ImageFont.truetype("arial.ttf", 20)
+                    try:
+                        font = ImageFont.truetype("arial.ttf", 20)
+                    except OSError:
+                        font = ImageFont.load("arial.pil")
                     draw.text(face, name_score, font=font, fill=(255, 255, 255, 255))
 
             found_persons = ", ".join(persons) if persons else "No face identified"
