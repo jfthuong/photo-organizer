@@ -1,5 +1,5 @@
 streamlit
-facenet_pytorch
+# facenet_pytorch
 fastai>=2.5
-pytorch
+# pytorch
 PIL
