@@ -121,7 +121,7 @@ if select_references == "Friends":
     st.sidebar.write(
         '*We are using one picture for each one of the "Friends": Ross, Rachel, etc.*'
     )
-    reference_dir = Path(__file__).parent / "facial" / "FRIENDS"
+    reference_dir = Path(__file__).parent / "friends_reference"
     references = list(reference_dir.glob("*.jpg"))
 else:
     st.sidebar.write(
@@ -221,7 +221,7 @@ if select == "from URL":
         display_prediction(url)
 
 elif select == "from samples of Friends":
-    pictures = sorted(Path(__file__).parent.glob("facial/samples_friends/*.jpg"))
+    pictures = sorted(Path(__file__).parent.glob("friends_samples/*.jpg"))
     for pic in pictures:
         display_prediction(pic)
 
