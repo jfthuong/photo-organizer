@@ -1,3 +1,5 @@
 streamlit
 facenet_pytorch
-unpackai  # which includes pytorch and PIL
+fastai>=2.5
+pytorch
+PIL

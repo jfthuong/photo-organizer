@@ -1,16 +1,17 @@
+import requests
 import tempfile
 from operator import itemgetter
 from pathlib import Path
-from typing import Callable, Dict, List, Tuple, Union
+from typing import Callable, List, Tuple, Union
 
 import streamlit as st
 from streamlit.uploaded_file_manager import UploadedFile
 import torch
 import torchvision.transforms as transforms
 from facenet_pytorch import MTCNN, InceptionResnetV1, extract_face
+from fastai.vision.core import PILImage
 from PIL import Image, ImageDraw, ImageFont
 from torch import Tensor
-from unpackai.deploy.cv import get_image
 
 PathLike = Union[Path, str]
 
@@ -34,6 +35,21 @@ def get_resnet():
 
 
 resnet = get_resnet()
+
+
+@st.cache
+def get_image(img: PathLike) -> PILImage:
+    """Get picture from either a path or URL"""
+    if str(img).startswith("http"):
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            dest = Path(tmpdirname) / str(img).split("?")[0].rpartition("/")[-1]
+            with requests.get(str(img)) as resp:
+                resp.raise_for_status()
+                dest.write_bytes(resp.content)
+
+            return PILImage.create(dest)
+    else:
+        return PILImage.create(img)
 
 
 def img_2_embedding(img_path: Union[PathLike, UploadedFile]) -> Tensor:
@@ -194,7 +210,9 @@ def display_prediction(pic):
     col_pred.write(f"### {persons}")
 
 
-select = st.radio("How to load pictures?", ["from files", "from samples of Friends", "from URL"])
+select = st.radio(
+    "How to load pictures?", ["from files", "from samples of Friends", "from URL"]
+)
 st.write("---")
 
 if select == "from URL":

@@ -10,7 +10,7 @@ The project is planned to work like this:
 
 Currently, only the facial identification is being implemented (using FaceNet).
 
-You can try the app stored in streamlit.
+You can try the app of Facial Identification from Streamlit: https://share.streamlit.io/jfthuong/photo-organizer/main/app_facial_recognition.py
 
 ## References
 
