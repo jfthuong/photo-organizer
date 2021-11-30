@@ -1,4 +1,5 @@
 import requests  # type:ignore
+import sys
 import tempfile
 from operator import itemgetter
 from pathlib import Path
@@ -17,6 +18,9 @@ PathLike = Union[Path, str]
 
 pil2t = transforms.ToTensor()
 t2pil = transforms.ToPILImage()
+
+# To be able to load arial.ttf font
+sys.path.append(str(Path(__file__).parent))
 
 st.set_page_config(page_title="ML deployment, by unpackAI", page_icon="🖼️")
 st.image("https://unpackai.github.io/unpackai_logo.svg")
