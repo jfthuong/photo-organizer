@@ -1,4 +1,4 @@
-import requests
+import requests  # type:ignore
 import tempfile
 from operator import itemgetter
 from pathlib import Path
